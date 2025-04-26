@@ -1,0 +1,7 @@
+双击"启动服务器.bat"
+
+
+使用Python运行"start_server.py"
+
+
+直接双击"index.html"

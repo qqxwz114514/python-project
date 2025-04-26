@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI对话助手</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- MathJax支持 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true
+        },
+        svg: {
+            fontCache: 'global'
+        },
+        options: {
+            enableMenu: false
+        }
+    };
+    </script>
+</head>
+<body>
+    <div class="chat-container" id="tilt-card">
+        <div class="chat-header">
+            <h1><i class="fas fa-robot"></i> AI对话助手</h1>
+            <p class="model-info"><i class="fas fa-circle pulse"></i> <span id="model-name">快速回复模式</span></p>
+        </div>
+        <div class="chat-tools">
+            <button id="copy-btn" class="tool-btn" title="复制对话"><i class="fas fa-copy"></i></button>
+            <button id="download-btn" class="tool-btn" title="下载对话记录"><i class="fas fa-download"></i></button>
+            <button id="clear-btn" class="tool-btn" title="清空对话"><i class="fas fa-trash-alt"></i></button>
+            <div class="model-selector-container">
+                <select id="model-selector" title="选择模型">
+                    <option value="fast">doubao-1-5-lite-32k</option>
+                    <option value="vision">doubao-1.5-vision-pro</option>
+                    <option value="standard">DeepSeek-v3</option>
+                    <option value="gpt">chatgpt-4o-mini</option>
+                    <option value="learnlm">learnlm-1.5-pro</option>
+                    <option value="qwen">gpt-4.1-mini</option>
+                    <option value="grok">grok-3-mini-beta</option>
+                    <option value="o1">gpt-o1-mini</option>
+                    <option value="claude">claude-3.5-haiku</option>
+                </select>
+            </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message ai-message">
+                <div class="message-content">您好！我是AI助手，有什么可以帮您的吗？</div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <textarea id="user-input" placeholder="在这里输入您的问题..." rows="3"></textarea>
+            <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+        <div class="glow-effect"></div>
+    </div>
+    <!-- 提示框 -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle toast-icon"></i>
+            <span id="toast-message">操作成功</span>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script>
+        // 初始化3D倾斜效果
+        VanillaTilt.init(document.getElementById("tilt-card"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+            gyroscope: true
+        });
+        
+        // 添加鼠标移动跟踪效果
+        const card = document.getElementById('tilt-card');
+        const glowEffect = document.querySelector('.glow-effect');
+        
+        document.addEventListener('mousemove', (e) => {
+            // 计算鼠标位置相对于窗口的百分比
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            // 应用光晕效果
+            glowEffect.style.background = `radial-gradient(
+                circle at ${x * 100}% ${y * 100}%,
+                rgba(126, 58, 242, 0.15),
+                transparent 40%
+            )`;
+            
+            // 额外的视差效果
+            const messages = document.querySelectorAll('.message');
+            messages.forEach((msg, index) => {
+                const depth = index % 2 === 0 ? 15 : 10;
+                const moveX = (x - 0.5) * depth;
+                const moveY = (y - 0.5) * depth;
+                msg.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html> 
