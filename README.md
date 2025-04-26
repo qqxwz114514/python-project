@@ -32,18 +32,7 @@
   - 清空对话历史
 ## 安装说明
 1. 克隆仓库到本地：
-bash
-
-运行
-
-Open Folder
-
-1
-
-2
-
 git clone [ 仓库地址 ]
-
 cd [ 仓库名 ]
 
 2. API密钥配置：
@@ -58,11 +47,7 @@ cd [ 仓库名 ]
 
 ### 方法二：Python启动
 
-'''bash
-python start_server.py
-或
-'''bash
-python3 start_server.py
+python start_server.py 或 python3 start_server.py
 
 ### 方法三：直接打开
 双击 index.html 直接在浏览器中打开（部分功能可能受限）。
